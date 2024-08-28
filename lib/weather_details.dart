@@ -27,49 +27,46 @@ class WeatherDetailsScreen extends StatelessWidget {
         },
         child: Consumer<WeatherProvider>(
           builder: (context, weatherProvider, child) {
-            if (weatherProvider.weatherData == null) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              
-              return FutureBuilder(
-                  future: weatherProvider.fetchWeather(city),
-                  builder: (context, snapshot) 
-                  {
-                    final weather = weatherProvider.weatherData!;
-                    return ListView(
-                      children: [
-                        Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '${weather['name']}',
-                                style: const TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${weather['main']['temp']} °C / ${(weather['main']['temp'] * 9 / 5 + 32).toStringAsFixed(2)} °F',
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              Text(
-                                '${weather['weather'][0]['description']}',
-                                style: const TextStyle(fontSize: 18),
-                              ),
-                              Text(
-                                'Humidity: ${weather['main']['humidity']}%',
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                'Wind Speed: ${weather['wind']['speed']} m/s',
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
+            return FutureBuilder(
+                future: weatherProvider.fetchWeather(city),
+                builder: (context, snapshot) {
+                  if (weatherProvider.weatherData == null) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  final weather = weatherProvider.weatherData!;
+                  return ListView(
+                    children: [
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${weather['name']}',
+                              style: const TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              '${weather['main']['temp']} °C / ${(weather['main']['temp'] * 9 / 5 + 32).toStringAsFixed(2)} °F',
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              '${weather['weather'][0]['description']}',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              'Humidity: ${weather['main']['humidity']}%',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              'Wind Speed: ${weather['wind']['speed']} m/s',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
-                      ],
-                    );
-                  });
-            }
+                      ),
+                    ],
+                  );
+                });
           },
         ),
       ),
